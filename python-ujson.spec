@@ -4,7 +4,7 @@
 }
 Name:           python-ujson
 Version:        1.23
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An ultra fast JSON encoder and decoder written in pure C
 
 Group:          Development/Libraries
@@ -39,5 +39,8 @@ pure C with bindings for Python
 
 
 %changelog
+* Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.23-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Wed Dec 19 2012 Kushal Das <kushal@fedoraproject.org> 1.23-1
 - Intial package
