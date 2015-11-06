@@ -2,7 +2,7 @@
 
 Name:           python-%{pypi_name}
 Version:        1.33
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An ultra fast JSON encoder and decoder written in pure C
 
 Group:          Development/Libraries
@@ -84,6 +84,9 @@ rm -rf *.egg-info
 
 
 %changelog
+* Fri Nov 06 2015 Robert Kuska <rkuska@redhat.com> - 1.33-2
+- Rebuilt for Python3.5 rebuild
+
 * Sat Aug 1 2015 Julien Enselme <jujens@jujens.eu> - 1.33-1
 - Update to 1.33
 - Enable python3 subpackage
