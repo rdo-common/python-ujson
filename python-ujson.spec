@@ -2,7 +2,7 @@
 
 Name:           python-%{pypi_name}
 Version:        1.33
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        An ultra fast JSON encoder and decoder written in pure C
 
 Group:          Development/Libraries
@@ -84,6 +84,9 @@ rm -rf *.egg-info
 
 
 %changelog
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.33-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
 * Fri Nov 06 2015 Robert Kuska <rkuska@redhat.com> - 1.33-2
 - Rebuilt for Python3.5 rebuild
 
