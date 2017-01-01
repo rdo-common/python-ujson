@@ -22,6 +22,9 @@ pure C with bindings for Python.
 Summary:        %{summary}
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
+BuildRequires:  python2-six
+BuildRequires:  python2-pytz
+BuildRequires:  python-blist
 BuildRequires:  python2-unittest2
 %{?python_provide:%python_provide python2-%{modname}}
 
@@ -33,6 +36,9 @@ Python 2 version.
 Summary:        %{summary}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
+BuildRequires:  python3-six
+BuildRequires:  python3-pytz
+BuildRequires:  python3-blist
 %{?python_provide:%python_provide python3-%{modname}}
 
 %description -n python3-%{modname} %{_description}
