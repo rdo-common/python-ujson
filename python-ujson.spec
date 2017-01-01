@@ -12,8 +12,6 @@ Source0:        %{url}/archive/v%{version}/%{modname}-%{version}.tar.gz
 # https://github.com/esnme/ultrajson/commit/39435177118c9fbc5d3863879c6e4616fd4c12c5
 Patch0001:      0001-do-not-forcefully-remove-the-build-directory-manuall.patch
 
-BuildRequires:  python-tools
-
 %global _description \
 UltraJSON is an ultra fast JSON encoder and decoder written in\
 pure C with bindings for Python.
