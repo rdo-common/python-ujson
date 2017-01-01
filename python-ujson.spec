@@ -1,89 +1,79 @@
-%global pypi_name ujson
+%global modname ujson
+%global srcname ultrajson
 
-Name:           python-%{pypi_name}
-Version:        1.33
-Release:        5%{?dist}
+Name:           python-%{modname}
+Version:        1.35
+Release:        1%{?dist}
 Summary:        An ultra fast JSON encoder and decoder written in pure C
 
-Group:          Development/Libraries
 License:        BSD
-URL:            http://pypi.python.org/pypi/%{pypi_name}
-Source0:        http://pypi.python.org/packages/source/u/%{pypi_name}/%{pypi_name}-%{version}.zip
-Source1:        https://raw.githubusercontent.com/esnme/ultrajson/master/LICENSE.txt
-BuildRequires:  python2-devel
-BuildRequires:  python-setuptools
+URL:            https://github.com/esnme/ultrajson
+Source0:        %{url}/archive/v%{version}/%{modname}-%{version}.tar.gz
+# https://github.com/esnme/ultrajson/commit/39435177118c9fbc5d3863879c6e4616fd4c12c5
+Patch0001:      0001-do-not-forcefully-remove-the-build-directory-manuall.patch
+
 BuildRequires:  python-tools
 
+%global _description \
+UltraJSON is an ultra fast JSON encoder and decoder written in\
+pure C with bindings for Python.
 
-%description
-UltraJSON is an ultra fast JSON encoder and decoder written in
-pure C with bindings for Python
+%description %{_description}
 
+%package -n python2-%{modname}
+Summary:        %{summary}
+BuildRequires:  python2-devel
+BuildRequires:  python2-setuptools
+BuildRequires:  python2-unittest2
+%{?python_provide:%python_provide python2-%{modname}}
 
-%package -n python2-%{pypi_name}
-Summary:        An ultra fast JSON encoder and decoder written in pure C
-%{?python_provide:%python_provide python2-%{pypi_name}}
+%description -n python2-%{modname} %{_description}
 
-%description -n python2-%{pypi_name}
-UltraJSON is an ultra fast JSON encoder and decoder written in
-pure C with bindings for Python
+Python 2 version.
 
-
-%package -n python3-%{pypi_name}
-Summary:        An ultra fast JSON encoder and decoder written in pure C
+%package -n python3-%{modname}
+Summary:        %{summary}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
-%{?python_provide:%python_provide python3-%{pypi_name}}
+%{?python_provide:%python_provide python3-%{modname}}
 
-%description -n python3-%{pypi_name}
-UltraJSON is an ultra fast JSON encoder and decoder written in
-pure C with bindings for Python
+%description -n python3-%{modname} %{_description}
 
+Python 3 version.
 
 %prep
-%setup -qn %{pypi_name}-%{version}
-cp -a %{SOURCE1} .
-# Remove egg-info
-rm -rf *.egg-info
-
+%autosetup -n %{srcname}-%{version} -p1
 
 %build
 %py2_build
 %py3_build
 
-
 %install
-# If we install with --skip-build the build directory containing the C
-# extensions are deleted before the install. So, nothing install besides the
-# egg-info. See: https://github.com/esnme/ultrajson/issues/179
-%{__python2} setup.py install -O1 --root %{buildroot}
-%{__python3} setup.py install -O1 --root %{buildroot}
-
+%py2_install
+%py3_install
 
 %check
-# Test requires the PYTHONPATH to be updated with the result of the build. This
-# requires to correctly go in the arm folder.
-# See: https://lists.fedoraproject.org/pipermail/packaging/2015-July/010898.html
-# %%{__python2} tests/tests.py
-# Must run 2to3 before running test suite with python3
-2to3 -w tests/tests.py
-# %%{__python3} tests/tests.py
+PYTHONPATH=%{buildroot}%{python2_sitearch} %{__python2} tests/tests.py -v
+PYTHONPATH=%{buildroot}%{python3_sitearch} %{__python3} tests/tests.py -v
 
-
-%files -n python2-%{pypi_name}
+%files -n python2-%{modname}
 %license LICENSE.txt
 %doc README.rst
-%{python2_sitearch}/%{pypi_name}-%{version}-py%{python2_version}.egg-info/
-%{python2_sitearch}/%{pypi_name}.so
+%{python2_sitearch}/%{modname}-%{version}-py%{python2_version}.egg-info/
+%{python2_sitearch}/%{modname}.so
 
-%files -n python3-%{pypi_name}
+%files -n python3-%{modname}
 %license LICENSE.txt
 %doc README.rst
-%{python3_sitearch}/%{pypi_name}-%{version}-py%{python3_version}.egg-info/
-%{python3_sitearch}/%{pypi_name}*.so
-
+%{python3_sitearch}/%{modname}-%{version}-py%{python3_version}.egg-info/
+%{python3_sitearch}/%{modname}*.so
 
 %changelog
+* Sun Jan 01 2017 Igor Gnatenko <i.gnatenko.brain@gmail.com> - 1.35-1
+- Update to 1.35
+- Run test suite
+- Spec cleanups
+
 * Mon Dec 19 2016 Miro Hrončok <mhroncok@redhat.com> - 1.33-5
 - Rebuild for Python 3.6
 
