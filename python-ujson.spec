@@ -1,6 +1,10 @@
 %global modname ujson
 %global srcname ultrajson
 
+%if 0%{?fedora}
+%global with_python3 1
+%endif
+
 Name:           python-%{modname}
 Version:        1.35
 Release:        1%{?dist}
@@ -32,6 +36,7 @@ BuildRequires:  python2-unittest2
 
 Python 2 version.
 
+%if 0%{?with_python3}
 %package -n python3-%{modname}
 Summary:        %{summary}
 BuildRequires:  python3-devel
@@ -44,21 +49,28 @@ BuildRequires:  python3-blist
 %description -n python3-%{modname} %{_description}
 
 Python 3 version.
+%endif
 
 %prep
 %autosetup -n %{srcname}-%{version} -p1
 
 %build
 %py2_build
+%if 0%{?with_python3}
 %py3_build
+%endif
 
 %install
 %py2_install
+%if 0%{?with_python3}
 %py3_install
+%endif
 
 %check
 PYTHONPATH=%{buildroot}%{python2_sitearch} %{__python2} tests/tests.py -v
+%if 0%{?with_python3}
 PYTHONPATH=%{buildroot}%{python3_sitearch} %{__python3} tests/tests.py -v
+%endif
 
 %files -n python2-%{modname}
 %license LICENSE.txt
@@ -66,11 +78,13 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} %{__python3} tests/tests.py -v
 %{python2_sitearch}/%{modname}-%{version}-py%{python2_version}.egg-info/
 %{python2_sitearch}/%{modname}.so
 
+%if 0%{?with_python3}
 %files -n python3-%{modname}
 %license LICENSE.txt
 %doc README.rst
 %{python3_sitearch}/%{modname}-%{version}-py%{python3_version}.egg-info/
 %{python3_sitearch}/%{modname}*.so
+%endif
 
 %changelog
 * Sun Jan 01 2017 Igor Gnatenko <i.gnatenko.brain@gmail.com> - 1.35-1
