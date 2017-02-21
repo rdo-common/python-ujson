@@ -25,11 +25,11 @@ pure C with bindings for Python.
 %package -n python2-%{modname}
 Summary:        %{summary}
 BuildRequires:  python2-devel
-BuildRequires:  python2-setuptools
-BuildRequires:  python2-six
-BuildRequires:  python2-pytz
+BuildRequires:  python-setuptools
+BuildRequires:  python-six
+BuildRequires:  pytz
 BuildRequires:  python-blist
-BuildRequires:  python2-unittest2
+BuildRequires:  python-unittest2
 %{?python_provide:%python_provide python2-%{modname}}
 
 %description -n python2-%{modname} %{_description}
